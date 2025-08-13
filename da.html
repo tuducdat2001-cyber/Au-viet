@@ -1,14 +1,77 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Quản lý vận chuyển</title>
+    <style>
+        /* Giữ nguyên phần CSS như trước */
+        table { border-collapse: collapse; width: 100%; font-size: 12px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #4CAF50; color: white; position: sticky; top: 0; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        button { padding: 10px 15px; background: #2196F3; color: white; border: none; cursor: pointer; border-radius: 4px; margin: 10px 0; }
+        button:hover { background: #0b7dda; }
+        .container { max-height: 600px; overflow-y: auto; }
+    </style>
+</head>
 <body>
+    <button onclick="exportToExcel()">Xuất ra Excel</button>
+    <div class="container">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Số Bill</th>
+                    <th>Tỉnh nhận</th>
+                    <th>Ngày bốc</th>
+                    <!-- Các cột khác giữ nguyên -->
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-<h1>Heading 1</h1>
-<h2>Heading 2</h2>
-<h3>Heading 3</h3>
-<h4>Heading 4</h4>
-<h5>Heading 5</h5>
-<h6>Heading 6</h6>
+    <script>
+        // Hàm lấy tham số từ URL
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                ids: params.get('ids') ? params.get('ids').split(',') : [],
+                dates: params.get('dates') ? params.get('dates').split(',') : [],
+                provinces: params.get('provinces') ? params.get('provinces').split(',') : []
+                // Thêm các tham số khác nếu cần
+            };
+        }
 
+        // Hàm tạo bảng từ dữ liệu URL
+        function createTableFromUrlParams() {
+            const { ids, dates, provinces } = getUrlParams();
+            const tableBody = document.querySelector('#dataTable tbody');
+            
+            ids.forEach((id, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${id}</td>
+                    <td>${provinces[index] || 'N/A'}</td>
+                    <td>${dates[index] || 'N/A'}</td>
+                    <!-- Các cột khác -->
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Hàm xuất Excel (giữ nguyên như trước)
+        function exportToExcel() {
+            const html = `...`;
+            const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'quan_ly_van_chuyen.xls';
+            link.click();
+        }
+
+        // Khởi tạo bảng khi trang load
+        window.onload = createTableFromUrlParams;
+    </script>
 </body>
 </html>
-
