@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Yêu Cầu Mua Hàng - Công ty CP Đầu tư và Xây dựng Âu Việt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            border: 1px solid #0047AB;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 71, 171, 0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #0047AB;
+            padding-bottom: 10px;
+        }
+        .company-name {
+            color: #0047AB;
+            font-weight: bold;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+        .document-title {
+            color: #0047AB;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .project-info {
+            margin-bottom: 15px;
+        }
+        .info-row {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        .info-label {
+            width: 120px;
+            font-weight: bold;
+        }
+        .info-value {
+            flex: 1;
+        }
+        .document-code {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .note {
+            font-style: italic;
+            margin: 10px 0;
+            padding: 8px;
+            background-color: #f0f8ff;
+            border-left: 3px solid #0047AB;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #0047AB;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #0047AB;
+            color: white;
+            text-align: center;
+        }
+        .stt {
+            width: 40px;
+            text-align: center;
+        }
+        .quantity {
+            width: 70px;
+            text-align: center;
+        }
+        .unit {
+            width: 60px;
+            text-align: center;
+        }
+        .date {
+            width: 100px;
+            text-align: center;
+        }
+        .signature-area {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-box {
+            text-align: center;
+            width: 250px;
+        }
+        .signature-line {
+            border-top: 1px solid #000;
+            margin: 40px 0 5px;
+            font-style: italic;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #0047AB;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="company-name">CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ XÂY DỰNG ÂU VIỆT</div>
+            <div class="document-title">YÊU CẦU MUA HÀNG</div>
+        </div>
+
+        <div class="project-info">
+            <div class="info-row">
+                <div class="info-label">Công trình:</div>
+                <div class="info-value" id="project-name"></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Số YCMH:</div>
+                <div class="info-value" id="request-code"></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Ngày BH:</div>
+                <div class="info-value" id="request-date"></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Lần BH:</div>
+                <div class="info-value" id="request-version"></div>
+            </div>
+        </div>
+
+        <div class="note">
+            <strong>Mô tả mặt hàng càng chi tiết càng tốt.</strong> Nếu có một mặt hàng sử dụng cho nhiều mục đích thì đề nghị ghi vào mục đích sử dụng. Khi mua hàng cần tấy hóa đơn và các chứng từ theo quy định.
+        </div>
+
+        <table id="items-table">
+            <thead>
+                <tr>
+                    <th class="stt">Stt</th>
+                    <th>Mặt hàng</th>
+                    <th>Mô tả</th>
+                    <th>Mục đích sử dụng</th>
+                    <th>Bộ phận mua hàng</th>
+                    <th class="unit">Đơn vị</th>
+                    <th class="quantity">Số lượng</th>
+                    <th class="date">Ngày nhập hàng</th>
+                    <th>Vị trí nhập hàng</th>
+                    <th>Thay đổi so với TK (Nếu có)</th>
+                </tr>
+            </thead>
+            <tbody id="items-body">
+                <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
+            </tbody>
+        </table>
+
+        <div class="signature-area">
+            <div class="signature-box">
+                <div>NGƯỜI LẬP</div>
+                <div class="signature-line"></div>
+            </div>
+            <div class="signature-box">
+                <div>NGƯỜI KIỂM TRA</div>
+                <div class="signature-line"></div>
+            </div>
+            <div class="signature-box">
+                <div>NGƯỜI PHÊ DUYỆT</div>
+                <div class="signature-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading" id="loading">Đang tải dữ liệu...</div>
+    <div class="error" id="error" style="display: none;"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const apiUrl = 'https://script.google.com/macros/s/AKfycbz45axkSa-92kz-vCqAQ1xwmRjlFWqX6b0v-B0ENI73UIa8M9RzCXDkSQtNcwhFX2FA/exec';
+            const loadingElement = document.getElementById('loading');
+            const errorElement = document.getElementById('error');
+            
+            // Lấy ID phiếu từ URL (nếu có)
+            const urlParams = new URLSearchParams(window.location.search);
+            const requestId = urlParams.get('id');
+            
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Không thể kết nối đến server');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    loadingElement.style.display = 'none';
+                    
+                    if (data && data['Phiếu YCMH'] && data['Phiếu YCMH'].data.length > 0) {
+                        // Lấy thông tin phiếu yêu cầu (nếu có ID cụ thể từ URL thì lấy phiếu đó)
+                        let requestData;
+                        if (requestId) {
+                            requestData = data['Phiếu YCMH'].data.find(item => item.ID === requestId);
+                        }
+                        
+                        // Nếu không tìm thấy phiếu cụ thể hoặc không có ID, lấy phiếu đầu tiên
+                        if (!requestData) {
+                            requestData = data['Phiếu YCMH'].data[0];
+                        }
+                        
+                        // Hiển thị thông tin chung
+                        document.getElementById('project-name').textContent = requestData['Tên công trình'] || '';
+                        document.getElementById('request-code').textContent = requestData.ID || '';
+                        
+                        // Xử lý ngày tháng
+                        const requestDate = requestData['Ngày yêu cầu'] ? 
+                            new Date(requestData['Ngày yêu cầu']).toLocaleDateString('vi-VN') : 
+                            new Date().toLocaleDateString('vi-VN');
+                        document.getElementById('request-date').textContent = requestDate;
+                        
+                        document.getElementById('request-version').textContent = '01';
+                        
+                        // Lọc và hiển thị chi tiết phiếu yêu cầu
+                        if (data['YCMH chi tiết'] && data['YCMH chi tiết'].data.length > 0) {
+                            const details = data['YCMH chi tiết'].data.filter(
+                                item => item['Mã phiếu YCMH'] === requestData.ID
+                            );
+                            
+                            const itemsBody = document.getElementById('items-body');
+                            itemsBody.innerHTML = '';
+                            
+                            details.forEach(item => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td class="stt">${item.STT || ''}</td>
+                                    <td>${item['Mặt hàng'] || ''}</td>
+                                    <td>${item['Mô tả'] || ''}</td>
+                                    <td>${item['Mục đích sử dụng'] || ''}</td>
+                                    <td>${item['Bộ phận mua hàng'] || ''}</td>
+                                    <td class="unit">${item['Đơn vị tính'] || ''}</td>
+                                    <td class="quantity">${item['Số lượng'] || ''}</td>
+                                    <td class="date">${item['Ngày nhập hàng'] ? 
+                                        new Date(item['Ngày nhập hàng']).toLocaleDateString('vi-VN') : ''}</td>
+                                    <td>${item['Vị trí nhập hàng'] || ''}</td>
+                                    <td>${item['Thay đổi so với TK'] || ''}</td>
+                                `;
+                                itemsBody.appendChild(row);
+                            });
+                        } else {
+                            showError('Không có dữ liệu chi tiết cho phiếu yêu cầu này');
+                        }
+                    } else {
+                        showError('Không tìm thấy dữ liệu phiếu yêu cầu mua hàng');
+                    }
+                })
+                .catch(error => {
+                    loadingElement.style.display = 'none';
+                    showError('Lỗi khi tải dữ liệu: ' + error.message);
+                });
+                
+            function showError(message) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
