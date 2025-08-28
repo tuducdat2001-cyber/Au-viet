@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phiếu Yêu Cầu Mua Hàng - Công ty CP Đầu tư và Xây dựng Âu Việt</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,6 +19,7 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            position: relative; /* Cần cho position absolute của suggestionBox */
         }
         .container {
             width: 100%;
@@ -82,6 +83,89 @@
             font-size: 14px;
             z-index: 1;
         }
+        .search-container {
+            padding: 15px 25px;
+            background: #e6f0ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative; /* Cần cho position absolute của suggestionBox */
+        }
+        .search-input {
+            padding: 10px 15px;
+            border: 1px solid #0047AB;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 250px; /* Chiều rộng mặc định */
+            box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+        }
+        /* CSS cho hộp gợi ý */
+        #suggestions {
+            position: absolute;
+            top: 100%; /* Đặt ngay dưới input */
+            left: 0;
+            background-color: white;
+            border: 1px solid #0047AB;
+            border-radius: 0 0 5px 5px; /* Bo tròn dưới */
+            margin-top: -1px; /* Giúp liền mạch với border input */
+            max-height: 200px;
+            overflow-y: auto;
+            width: 250px; /* Bằng chiều rộng ô input */
+            display: none; 
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(0, 71, 171, 0.1);
+            border-top: none; /* Bỏ border trên để liền với input */
+        }
+        #suggestions div {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+            transition: background-color 0.2s ease;
+        }
+        #suggestions div:last-child {
+            border-bottom: none; /* Bỏ border dưới cho item cuối */
+        }
+        #suggestions div:hover {
+            background-color: #f0f7ff;
+        }
+
+        .search-button {
+            background: #0047AB;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .search-button:hover {
+            background: #003580;
+        }
+        .print-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+        .print-button:hover {
+            background: #218838;
+        }
         .content {
             padding: 25px;
         }
@@ -116,6 +200,7 @@
             border-radius: 8px;
             min-width: 180px;
             box-shadow: 0 3px 10px rgba(0, 71, 171, 0.08);
+            flex: 1; /* Giúp các box giãn nở */
         }
         .detail-label {
             font-size: 14px;
@@ -224,7 +309,27 @@
             margin: 20px 0;
             display: none;
         }
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-style: italic;
+            display: none;
+        }
         @media (max-width: 768px) {
+            .search-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box {
+                width: 100%;
+            }
+            .search-input {
+                width: 100%;
+            }
+            #suggestions {
+                width: 100%; /* Chiều rộng 100% trên màn hình nhỏ */
+            }
             .request-details {
                 flex-direction: column;
             }
@@ -239,13 +344,110 @@
                 flex-direction: column;
             }
         }
+        /* --- CSS cho chế độ in --- */
+        @media print {
+            body {
+                background: white; /* Nền trắng khi in */
+                margin: 0;
+                padding: 0;
+                font-family: "Times New Roman", Times, serif; /* Font chữ dễ đọc trên giấy */
+            }
+            .container {
+                box-shadow: none; /* Bỏ shadow khi in */
+                border-radius: 0; /* Bỏ bo góc */
+                width: 100%;
+                max-width: 100%; /* Chiếm toàn bộ chiều rộng */
+            }
+            .header {
+                background: linear-gradient(135deg, #0047AB 0%, #002b6b 100%); /* Giữ màu header */
+                -webkit-print-color-adjust: exact; /* Đảm bảo màu sắc được in */
+                print-color-adjust: exact;
+            }
+            .search-container, /* Ẩn các thành phần tìm kiếm và điều khiển */
+            .loading,
+            .error,
+            .no-data,
+            .footer {
+                display: none !important; /* Quan trọng: ẩn các mục này */
+            }
+            .content {
+                padding: 10px 20px; /* Giảm padding nội dung */
+            }
+            .project-info {
+                border-left: 3px solid #0047AB; /* Giảm độ dày border */
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            .info-label {
+                font-size: 12px; /* Giảm font cho label */
+            }
+            .info-value {
+                font-size: 13px; /* Giảm font cho giá trị */
+                font-weight: 500;
+            }
+            .request-details {
+                gap: 10px; /* Giảm khoảng cách giữa các detail box */
+                margin-bottom: 15px;
+            }
+            .detail-box {
+                padding: 10px; /* Giảm padding của detail box */
+                box-shadow: 0 2px 5px rgba(0, 71, 171, 0.08); /* Shadow nhẹ hơn */
+            }
+            .detail-label {
+                font-size: 12px; /* Giảm font cho label */
+            }
+            .detail-value {
+                font-size: 14px; /* Giảm font cho giá trị */
+            }
+            .items-table th {
+                padding: 10px 8px; /* Giảm padding header */
+                font-size: 12px; /* Giảm font header */
+                background-color: #0047AB; /* Giữ màu header */
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .items-table td {
+                padding: 8px 8px; /* Giảm padding cell */
+                font-size: 11px; /* Giảm font cell */
+                border-bottom: 1px solid #ddd; /* Border nhẹ hơn */
+            }
+            .stt, .quantity, .unit, .date { /* Căn giữa các cột cố định */
+                text-align: center;
+            }
+            .signature-area {
+                margin-top: 30px; /* Giảm margin trên */
+                gap: 15px;
+            }
+            .signature-box div { /* Giảm font cho chữ ký */
+                font-size: 12px;
+            }
+            .signature-line {
+                margin-top: 30px; /* Giảm margin trên cho đường kẻ */
+                margin-bottom: 5px;
+                padding-top: 3px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <div class="document-code">Mã: BM-2</div>
             <div class="company-name">CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ XÂY DỰNG ÂU VIỆT</div>
             <div class="document-title">YÊU CẦU MUA HÀNG</div>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="search-input" class="search-input" placeholder="Nhập mã YCMH...">
+                <!-- Hộp gợi ý sẽ được thêm vào đây bằng JavaScript -->
+                <button id="search-button" class="search-button">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+            </div>
+            <button id="print-button" class="print-button">
+                <i class="fas fa-print"></i> In phiếu
+            </button>
         </div>
 
         <div class="content">
@@ -295,6 +497,10 @@
                 </tbody>
             </table>
 
+            <div id="no-data" class="no-data">
+                Không tìm thấy dữ liệu cho mã YCMH này.
+            </div>
+
             <div class="signature-area">
                 <div class="signature-box">
                     <div>NGƯỜI LẬP</div>
@@ -331,11 +537,28 @@
             const apiUrl = 'https://script.google.com/macros/s/AKfycbz45axkSa-92kz-vCqAQ1xwmRjlFWqX6b0v-B0ENI73UIa8M9RzCXDkSQtNcwhFX2FA/exec';
             const loadingElement = document.getElementById('loading');
             const errorElement = document.getElementById('error');
+            const noDataElement = document.getElementById('no-data');
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const printButton = document.getElementById('print-button');
+            const searchBoxElement = document.querySelector('.search-box'); // Lấy phần tử cha của input
+
+            // Element cho gợi ý tìm kiếm
+            const suggestionBox = document.createElement('div');
+            suggestionBox.id = 'suggestions';
+            searchBoxElement.appendChild(suggestionBox); // Thêm vào sau ô input
+
+            let allData = null;
+            let availableRequests = []; // Lưu danh sách các mã YCMH có sẵn
             
             // Lấy ID phiếu từ URL (nếu có)
             const urlParams = new URLSearchParams(window.location.search);
             const requestId = urlParams.get('id');
+            if (requestId) {
+                searchInput.value = requestId;
+            }
             
+            // Tải dữ liệu từ API
             fetch(apiUrl)
                 .then(response => {
                     if (!response.ok) {
@@ -345,72 +568,187 @@
                 })
                 .then(data => {
                     loadingElement.style.display = 'none';
+                    allData = data;
                     
-                    if (data && data['Phiếu YCMH'] && data['Phiếu YCMH'].data.length > 0) {
-                        // Lấy thông tin phiếu yêu cầu (nếu có ID cụ thể từ URL thì lấy phiếu đó)
-                        let requestData;
-                        if (requestId) {
-                            requestData = data['Phiếu YCMH'].data.find(item => item.ID === requestId);
-                        }
-                        
-                        // Nếu không tìm thấy phiếu cụ thể hoặc không có ID, lấy phiếu đầu tiên
-                        if (!requestData) {
-                            requestData = data['Phiếu YCMH'].data[0];
-                        }
-                        
-                        // Hiển thị thông tin chung
-                        document.getElementById('project-name').textContent = requestData['Tên công trình'] || '';
-                        document.getElementById('request-code').textContent = requestData.ID || '';
-                        
-                        // Xử lý ngày tháng
-                        const requestDate = requestData['Ngày yêu cầu'] ? 
-                            new Date(requestData['Ngày yêu cầu']).toLocaleDateString('vi-VN') : 
-                            new Date().toLocaleDateString('vi-VN');
-                        document.getElementById('request-date').textContent = requestDate;
-                        
-                        // Lọc và hiển thị chi tiết phiếu yêu cầu
-                        if (data['YCMH chi tiết'] && data['YCMH chi tiết'].data.length > 0) {
-                            const details = data['YCMH chi tiết'].data.filter(
-                                item => item['Mã phiếu YCMH'] === requestData.ID
-                            );
-                            
-                            const itemsBody = document.getElementById('items-body');
-                            itemsBody.innerHTML = '';
-                            
-                            // Cập nhật tổng số mặt hàng
-                            document.getElementById('total-items').textContent = details.length;
-                            
-                            details.forEach(item => {
-                                const row = document.createElement('tr');
-                                row.innerHTML = `
-                                    <td class="stt">${item.STT || ''}</td>
-                                    <td>${item['Mặt hàng'] || ''}</td>
-                                    <td>${item['Mô tả'] || ''}</td>
-                                    <td>${item['Mục đích sử dụng'] || ''}</td>
-                                    <td class="unit">${item['Đơn vị tính'] || ''}</td>
-                                    <td class="quantity">${item['Số lượng'] || ''}</td>
-                                    <td class="date">${item['Ngày nhập hàng'] ? 
-                                        new Date(item['Ngày nhập hàng']).toLocaleDateString('vi-VN') : ''}</td>
-                                    <td>${item['Vị trí nhập hàng'] || ''}</td>
-                                    <td>${item['Thay đổi so với TK'] || ''}</td>
-                                `;
-                                itemsBody.appendChild(row);
-                            });
-                        } else {
-                            showError('Không có dữ liệu chi tiết cho phiếu yêu cầu này');
-                        }
+                    // Xử lý dữ liệu để lấy danh sách gợi ý
+                    if (allData && allData['Phiếu YCMH'] && Array.isArray(allData['Phiếu YCMH'].data)) {
+                        availableRequests = allData['Phiếu YCMH'].data.map(item => item.ID);
+                    }
+
+                    // Nếu có mã YCMH trong URL, thực hiện tìm kiếm
+                    if (requestId) {
+                        searchRequest(requestId);
+                    } else if (data && data['Phiếu YCMH'] && data['Phiếu YCMH'].data.length > 0) {
+                        // Nếu không có mã, hiển thị phiếu đầu tiên (nếu có dữ liệu)
+                        displayRequest(data['Phiếu YCMH'].data[0]);
                     } else {
-                        showError('Không tìm thấy dữ liệu phiếu yêu cầu mua hàng');
+                        // Nếu không có request ID và cũng không có dữ liệu nào để hiển thị mặc định
+                        clearRequestData(); // Xóa sạch dữ liệu cũ
+                        noDataElement.style.display = 'block'; // Hiển thị thông báo không có dữ liệu
                     }
                 })
                 .catch(error => {
                     loadingElement.style.display = 'none';
                     showError('Lỗi khi tải dữ liệu: ' + error.message);
                 });
+            
+            // Xử lý sự kiện tìm kiếm
+            searchButton.addEventListener('click', function() {
+                const searchValue = searchInput.value.trim();
+                if (searchValue) {
+                    searchRequest(searchValue);
+                } else {
+                    showError('Vui lòng nhập mã YCMH để tìm kiếm');
+                }
+                suggestionBox.style.display = 'none'; // Ẩn gợi ý sau khi tìm kiếm
+            });
+            
+            // Xử lý sự kiện nhấn Enter trong ô tìm kiếm
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchButton.click();
+                }
+            });
+
+            // Xử lý sự kiện gõ vào ô tìm kiếm để hiển thị gợi ý
+            searchInput.addEventListener('input', function() {
+                const searchValue = this.value.trim().toLowerCase();
+                suggestionBox.innerHTML = ''; // Xóa gợi ý cũ
+                suggestionBox.style.display = 'none'; // Ẩn nếu không có gì khớp
+
+                if (searchValue.length > 0 && availableRequests.length > 0) {
+                    const filteredRequests = availableRequests.filter(reqId => 
+                        reqId.toLowerCase().includes(searchValue)
+                    );
+                    
+                    if (filteredRequests.length > 0) {
+                        filteredRequests.forEach(reqId => {
+                            const suggestionItem = document.createElement('div');
+                            suggestionItem.textContent = reqId;
+                            suggestionItem.addEventListener('mouseover', function() {
+                                this.style.backgroundColor = '#f0f7ff';
+                            });
+                            suggestionItem.addEventListener('mouseout', function() {
+                                this.style.backgroundColor = 'white';
+                            });
+                            
+                            // Khi click vào gợi ý
+                            suggestionItem.addEventListener('click', function() {
+                                searchInput.value = this.textContent;
+                                suggestionBox.style.display = 'none';
+                                searchRequest(this.textContent); // Tự động tìm kiếm khi chọn gợi ý
+                            });
+                            
+                            suggestionBox.appendChild(suggestionItem);
+                        });
+                        suggestionBox.style.display = 'block'; // Hiển thị hộp gợi ý
+                    }
+                }
+            });
+
+            // Ẩn gợi ý khi click ra ngoài ô input hoặc hộp gợi ý
+            document.addEventListener('click', function(event) {
+                // Kiểm tra xem sự kiện click có xảy ra bên ngoài ô input và hộp gợi ý hay không
+                if (!searchInput.contains(event.target) && !suggestionBox.contains(event.target)) {
+                    suggestionBox.style.display = 'none';
+                }
+            });
+            
+            // Xử lý sự kiện in phiếu
+            printButton.addEventListener('click', function() {
+                window.print();
+            });
+            
+            // Hàm tìm kiếm phiếu yêu cầu
+            function searchRequest(requestId) {
+                if (!allData) return;
+                
+                loadingElement.style.display = 'none';
+                errorElement.style.display = 'none';
+                noDataElement.style.display = 'none';
+                
+                if (allData['Phiếu YCMH'] && Array.isArray(allData['Phiếu YCMH'].data)) {
+                    const requestData = allData['Phiếu YCMH'].data.find(
+                        item => item.ID && item.ID.toLowerCase() === requestId.toLowerCase()
+                    );
+                    
+                    if (requestData) {
+                        displayRequest(requestData);
+                    } else {
+                        clearRequestData();
+                        noDataElement.style.display = 'block';
+                    }
+                } else {
+                    showError('Dữ liệu phiếu YCMH không hợp lệ.');
+                }
+            }
+            
+            // Hiển thị thông tin phiếu yêu cầu
+            function displayRequest(requestData) {
+                document.getElementById('project-name').textContent = requestData['Tên công trình'] || '';
+                document.getElementById('request-code').textContent = requestData.ID || '';
+                
+                // Xử lý ngày tháng
+                const requestDate = requestData['Ngày yêu cầu'] ? 
+                    new Date(requestData['Ngày yêu cầu']).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 
+                    new Date().toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                document.getElementById('request-date').textContent = requestDate;
+                
+                // Lọc và hiển thị chi tiết phiếu yêu cầu
+                if (allData['YCMH chi tiết'] && Array.isArray(allData['YCMH chi tiết'].data)) {
+                    const details = allData['YCMH chi tiết'].data.filter(
+                        item => item['Mã phiếu YCMH'] === requestData.ID
+                    );
+                    
+                    const itemsBody = document.getElementById('items-body');
+                    itemsBody.innerHTML = '';
+                    
+                    // Cập nhật tổng số mặt hàng
+                    document.getElementById('total-items').textContent = details.length;
+                    
+                    if (details.length > 0) {
+                        details.forEach((item, index) => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="stt">${item.STT || (index + 1)}</td>
+                                <td>${item['Mặt hàng'] || ''}</td>
+                                <td>${item['Mô tả'] || ''}</td>
+                                <td>${item['Mục đích sử dụng'] || ''}</td>
+                                <td class="unit">${item['Đơn vị tính'] || ''}</td>
+                                <td class="quantity">${item['Số lượng'] || ''}</td>
+                                <td class="date">${item['Ngày nhập hàng'] ? 
+                                    new Date(item['Ngày nhập hàng']).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }) : ''}</td>
+                                <td>${item['Vị trí nhập hàng'] || ''}</td>
+                                <td>${item['Thay đổi so với TK'] || ''}</td>
+                            `;
+                            itemsBody.appendChild(row);
+                        });
+                        noDataElement.style.display = 'none'; // Ẩn thông báo nếu có dữ liệu chi tiết
+                    } else {
+                        noDataElement.style.display = 'block';
+                    }
+                } else {
+                    showError('Không có dữ liệu chi tiết cho phiếu yêu cầu này hoặc dữ liệu chi tiết không hợp lệ.');
+                    noDataElement.style.display = 'block'; // Hiển thị thông báo không có dữ liệu chi tiết
+                }
+            }
+            
+            // Xóa dữ liệu hiện tại trên giao diện
+            function clearRequestData() {
+                document.getElementById('project-name').textContent = '';
+                document.getElementById('request-code').textContent = '';
+                document.getElementById('request-date').textContent = '';
+                document.getElementById('total-items').textContent = '0';
+                document.getElementById('items-body').innerHTML = '';
+            }
                 
             function showError(message) {
                 errorElement.textContent = message;
                 errorElement.style.display = 'block';
+                // Đảm bảo các phần khác bị ẩn khi có lỗi
+                loadingElement.style.display = 'none';
+                noDataElement.style.display = 'none';
+                document.getElementById('items-body').innerHTML = ''; // Xóa bảng nếu có lỗi
             }
         });
     </script>
