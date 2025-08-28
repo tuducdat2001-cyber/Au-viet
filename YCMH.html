@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phiếu Yêu Cầu Mua Hàng - Công ty CP Đầu tư và Xây dựng Âu Việt</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -36,8 +36,11 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            display: flex; /* Sử dụng flexbox để căn chỉnh logo và text */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            justify-content: space-between; /* Đẩy logo sang trái, text sang phải */
         }
-        .header::before {
+        .header::before, .header::after { /* Giữ các hiệu ứng nền cũ */
             content: "";
             position: absolute;
             top: -50px;
@@ -48,29 +51,37 @@
             border-radius: 50%;
         }
         .header::after {
-            content: "";
-            position: absolute;
             bottom: -80px;
             left: -80px;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            top: auto; /* Hủy bỏ top của ::before */
+            right: auto; /* Hủy bỏ right của ::before */
+        }
+        .logo-container { /* Container cho logo */
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Khoảng cách giữa logo và text */
+            flex-shrink: 0; /* Ngăn logo bị co lại */
+        }
+        .header-logo {
+            height: 60px; /* Điều chỉnh chiều cao logo phù hợp */
+            width: auto;
+            display: block; /* Giúp chiều cao hoạt động tốt */
+        }
+        .company-info { /* Container cho tên công ty và tiêu đề */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1; /* Cho phép phần này chiếm không gian còn lại */
         }
         .company-name {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 5px;
             text-transform: uppercase;
-            position: relative;
-            z-index: 1;
         }
         .document-title {
             font-size: 28px;
             font-weight: 800;
-            margin: 10px 0;
-            position: relative;
-            z-index: 1;
             letter-spacing: 1px;
         }
         .document-code {
@@ -81,7 +92,7 @@
             padding: 8px 15px;
             border-radius: 5px;
             font-size: 14px;
-            z-index: 1;
+            z-index: 1; /* Đảm bảo nằm trên cùng */
         }
         .search-container {
             padding: 15px 25px;
@@ -278,7 +289,7 @@
             font-size: 14px;
             border-top: 1px solid #d0e5ff;
         }
-        .logo {
+        .logo { /* Đã đổi tên class này vì nó được dùng ở footer */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -317,6 +328,19 @@
             display: none;
         }
         @media (max-width: 768px) {
+            .header {
+                flex-direction: column; /* Stack logo và text theo chiều dọc */
+                align-items: center;
+            }
+            .logo-container {
+                margin-bottom: 15px; /* Khoảng cách dưới logo */
+            }
+            .company-info {
+                width: 100%; /* Cho phép chiếm toàn bộ chiều rộng */
+            }
+            .document-title {
+                font-size: 24px; /* Giảm kích thước tiêu đề */
+            }
             .search-container {
                 flex-direction: column;
                 align-items: stretch;
@@ -351,6 +375,7 @@
                 margin: 0;
                 padding: 0;
                 font-family: "Times New Roman", Times, serif; /* Font chữ dễ đọc trên giấy */
+                font-size: 12pt; /* Kích thước font mặc định cho in */
             }
             .container {
                 box-shadow: none; /* Bỏ shadow khi in */
@@ -362,7 +387,36 @@
                 background: linear-gradient(135deg, #0047AB 0%, #002b6b 100%); /* Giữ màu header */
                 -webkit-print-color-adjust: exact; /* Đảm bảo màu sắc được in */
                 print-color-adjust: exact;
+                display: flex; /* Đảm bảo layout flex cho header */
+                align-items: center;
+                justify-content: space-between; /* Phân bố không gian */
+                padding: 10px 20px; /* Padding nhỏ hơn khi in */
             }
+            .header::before, .header::after { /* Ẩn các hiệu ứng nền khi in */
+                display: none;
+            }
+            .logo-container {
+                gap: 10px; /* Giảm khoảng cách */
+            }
+            .header-logo {
+                height: 50px; /* Chiều cao logo khi in */
+            }
+            .company-info {
+                flex-grow: 1;
+                align-items: center; /* Căn giữa nội dung */
+            }
+            .company-name {
+                font-size: 16pt; /* Kích thước font */
+                margin-bottom: 3px;
+            }
+            .document-title {
+                font-size: 18pt; /* Kích thước font */
+                letter-spacing: 0.5px;
+            }
+            .document-code {
+                display: none; /* Ẩn mã tài liệu khi in */
+            }
+
             .search-container, /* Ẩn các thành phần tìm kiếm và điều khiển */
             .loading,
             .error,
@@ -377,38 +431,59 @@
                 border-left: 3px solid #0047AB; /* Giảm độ dày border */
                 padding: 15px;
                 margin-bottom: 20px;
+                grid-template-columns: auto 1fr; /* Giữ nguyên định dạng grid */
             }
             .info-label {
-                font-size: 12px; /* Giảm font cho label */
+                font-size: 11pt; /* Giảm font cho label */
+                color: #0047AB; /* Giữ màu cho label */
             }
             .info-value {
-                font-size: 13px; /* Giảm font cho giá trị */
+                font-size: 12pt; /* Giảm font cho giá trị */
                 font-weight: 500;
             }
             .request-details {
                 gap: 10px; /* Giảm khoảng cách giữa các detail box */
                 margin-bottom: 15px;
+                flex-wrap: wrap;
             }
             .detail-box {
+                background: #f8f8f8; /* Nền nhạt hơn */
                 padding: 10px; /* Giảm padding của detail box */
                 box-shadow: 0 2px 5px rgba(0, 71, 171, 0.08); /* Shadow nhẹ hơn */
+                min-width: 150px; /* Giảm min-width */
             }
             .detail-label {
-                font-size: 12px; /* Giảm font cho label */
+                font-size: 11pt; /* Giảm font cho label */
+                color: #0047AB; /* Giữ màu cho label */
             }
             .detail-value {
-                font-size: 14px; /* Giảm font cho giá trị */
+                font-size: 12pt; /* Giảm font cho giá trị */
+            }
+            .items-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 15px 0; /* Giảm margin */
+                box-shadow: none; /* Bỏ shadow cho table */
+                border-radius: 0; /* Bỏ bo góc */
+                overflow: visible; /* Cho phép hiển thị border đầy đủ */
             }
             .items-table th {
-                padding: 10px 8px; /* Giảm padding header */
-                font-size: 12px; /* Giảm font header */
                 background-color: #0047AB; /* Giữ màu header */
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+                color: white;
+                padding: 10px 8px; /* Giảm padding header */
+                font-size: 11pt; /* Giảm font header */
+                text-align: left;
+                font-weight: 600;
+                border-right: 1px solid #002b6b; /* Thêm viền để phân tách cột */
+            }
+            .items-table th:last-child {
+                border-right: none;
             }
             .items-table td {
                 padding: 8px 8px; /* Giảm padding cell */
-                font-size: 11px; /* Giảm font cell */
+                font-size: 10pt; /* Giảm font cell */
                 border-bottom: 1px solid #ddd; /* Border nhẹ hơn */
             }
             .stt, .quantity, .unit, .date { /* Căn giữa các cột cố định */
@@ -417,11 +492,18 @@
             .signature-area {
                 margin-top: 30px; /* Giảm margin trên */
                 gap: 15px;
+                justify-content: space-around; /* Phân bố đều hơn */
+            }
+            .signature-box {
+                text-align: center;
+                flex: none; /* Bỏ flex grow */
+                min-width: 180px; /* Chiều rộng cố định cho box chữ ký */
             }
             .signature-box div { /* Giảm font cho chữ ký */
-                font-size: 12px;
+                font-size: 11pt;
             }
             .signature-line {
+                border-top: 1px solid #0047AB;
                 margin-top: 30px; /* Giảm margin trên cho đường kẻ */
                 margin-bottom: 5px;
                 padding-top: 3px;
@@ -432,9 +514,14 @@
 <body>
     <div class="container">
         <div class="header">
+            <div class="logo-container">
+                <img src="Kho ảnh_Images_09d5aefa.Ảnh.061339.jpg" alt="Au Viet Construction Logo" class="header-logo">
+            </div>
+            <div class="company-info">
+                <div class="company-name">CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ XÂY DỰNG ÂU VIỆT</div>
+                <div class="document-title">YÊU CẦU MUA HÀNG</div>
+            </div>
             <div class="document-code">Mã: BM-2</div>
-            <div class="company-name">CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ XÂY DỰNG ÂU VIỆT</div>
-            <div class="document-title">YÊU CẦU MUA HÀNG</div>
         </div>
 
         <div class="search-container">
