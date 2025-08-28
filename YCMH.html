@@ -4,88 +4,163 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phiếu Yêu Cầu Mua Hàng - Công ty CP Đầu tư và Xây dựng Âu Việt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0f6ff;
             color: #333;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
         }
         .container {
+            width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
-            border: 1px solid #0047AB;
-            padding: 15px;
-            box-shadow: 0 0 10px rgba(0, 71, 171, 0.2);
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 71, 171, 0.15);
         }
         .header {
+            background: linear-gradient(135deg, #0047AB 0%, #002b6b 100%);
+            color: white;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #0047AB;
-            padding-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .header::after {
+            content: "";
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
         }
         .company-name {
-            color: #0047AB;
+            font-size: 24px;
             font-weight: bold;
-            font-size: 18px;
+            margin-bottom: 5px;
             text-transform: uppercase;
+            position: relative;
+            z-index: 1;
         }
         .document-title {
-            color: #0047AB;
-            font-weight: bold;
-            font-size: 16px;
+            font-size: 28px;
+            font-weight: 800;
             margin: 10px 0;
-        }
-        .project-info {
-            margin-bottom: 15px;
-        }
-        .info-row {
-            display: flex;
-            margin-bottom: 5px;
-        }
-        .info-label {
-            width: 120px;
-            font-weight: bold;
-        }
-        .info-value {
-            flex: 1;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
         }
         .document-code {
-            text-align: right;
-            margin-bottom: 10px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1;
         }
-        .note {
-            font-style: italic;
-            margin: 10px 0;
-            padding: 8px;
-            background-color: #f0f8ff;
-            border-left: 3px solid #0047AB;
+        .content {
+            padding: 25px;
         }
-        table {
+        .project-info {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 12px 5px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8fbff;
+            border-radius: 8px;
+            border-left: 5px solid #0047AB;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #0047AB;
+            white-space: nowrap;
+        }
+        .info-value {
+            font-weight: 500;
+        }
+        .request-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .detail-box {
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 180px;
+            box-shadow: 0 3px 10px rgba(0, 71, 171, 0.08);
+        }
+        .detail-label {
+            font-size: 14px;
+            color: #0047AB;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .detail-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #002b6b;
+        }
+        .items-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
         }
-        th, td {
-            border: 1px solid #0047AB;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
+        .items-table th {
             background-color: #0047AB;
             color: white;
-            text-align: center;
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        .items-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .items-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .items-table tr:hover {
+            background-color: #f0f7ff;
         }
         .stt {
-            width: 40px;
+            width: 50px;
             text-align: center;
         }
-        .quantity {
-            width: 70px;
-            text-align: center;
-        }
-        .unit {
-            width: 60px;
+        .quantity, .unit {
+            width: 80px;
             text-align: center;
         }
         .date {
@@ -93,186 +168,315 @@
             text-align: center;
         }
         .signature-area {
-            margin-top: 40px;
             display: flex;
             justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
         .signature-box {
             text-align: center;
-            width: 250px;
+            flex: 1;
+            min-width: 200px;
         }
         .signature-line {
-            border-top: 1px solid #000;
-            margin: 40px 0 5px;
+            border-top: 1px solid #0047AB;
+            margin: 50px 0 10px;
+            padding-top: 5px;
             font-style: italic;
+            color: #0047AB;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 15px;
+            background: #f0f7ff;
+            color: #0047AB;
+            font-size: 14px;
+            border-top: 1px solid #d0e5ff;
+        }
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .logo-icon {
+            font-size: 32px;
+            color: #0047AB;
+        }
+        @media (max-width: 768px) {
+            .request-details {
+                flex-direction: column;
+            }
+            .detail-box {
+                width: 100%;
+            }
+            .items-table {
+                display: block;
+                overflow-x: auto;
+            }
+            .signature-area {
+                flex-direction: column;
+            }
         }
         .loading {
             text-align: center;
-            padding: 20px;
+            padding: 40px;
             color: #0047AB;
+            font-size: 18px;
         }
-        .error {
-            color: red;
-            text-align: center;
-            padding: 20px;
+        .loading i {
+            font-size: 32px;
+            margin-bottom: 15px;
+            display: block;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <div class="document-code">Mã: BM-2</div>
             <div class="company-name">CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ XÂY DỰNG ÂU VIỆT</div>
             <div class="document-title">YÊU CẦU MUA HÀNG</div>
         </div>
 
-        <div class="project-info">
-            <div class="info-row">
+        <div class="content">
+            <div class="project-info">
                 <div class="info-label">Công trình:</div>
-                <div class="info-value" id="project-name"></div>
-            </div>
-            <div class="info-row">
+                <div class="info-value" id="project-name">Matsuo-Cải tạo bếp, bar-AV-MATSUO/02-2025</div>
+                
                 <div class="info-label">Số YCMH:</div>
-                <div class="info-value" id="request-code"></div>
+                <div class="info-value" id="request-code">MIV-Luật-02</div>
             </div>
-            <div class="info-row">
-                <div class="info-label">Ngày BH:</div>
-                <div class="info-value" id="request-date"></div>
+
+            <div class="request-details">
+                <div class="detail-box">
+                    <div class="detail-label">Ngày yêu cầu</div>
+                    <div class="detail-value" id="request-date">28/08/2025</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Lần ban hành</div>
+                    <div class="detail-value" id="request-version">01</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Bộ phận</div>
+                    <div class="detail-value" id="request-department">Văn phòng</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Tổng mặt hàng</div>
+                    <div class="detail-value" id="total-items">11</div>
+                </div>
             </div>
-            <div class="info-row">
-                <div class="info-label">Lần BH:</div>
-                <div class="info-value" id="request-version"></div>
+
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th class="stt">STT</th>
+                        <th>Mặt hàng</th>
+                        <th>Mô tả</th>
+                        <th>Mục đích sử dụng</th>
+                        <th>Đơn vị</th>
+                        <th class="quantity">Số lượng</th>
+                        <th class="date">Ngày nhập</th>
+                        <th>Vị trí nhập</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="stt">1</td>
+                        <td>Ống đồng cuộn D9.5 dây 0.81</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Mét</td>
+                        <td class="quantity">293</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">2</td>
+                        <td>Ống đồng cuộn D15.9 dây 0.8</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Mét</td>
+                        <td class="quantity">293</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">3</td>
+                        <td>Bảo ôn ống đồng 10 dây 19m</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Mét</td>
+                        <td class="quantity">293</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">4</td>
+                        <td>Bảo ôn ống đồng 16 dây 19m</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Mét</td>
+                        <td class="quantity">293</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">5</td>
+                        <td>Bảo ôn ống nước ngưng D48</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Mét</td>
+                        <td class="quantity">78</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">6</td>
+                        <td>Bảo ôn ống nước ngưng D27</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Mét</td>
+                        <td class="quantity">24</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">7</td>
+                        <td>Băng quấn ống đồng</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Kg</td>
+                        <td class="quantity">79</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">8</td>
+                        <td>Keo con chó gắn bảo ôn</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Kg</td>
+                        <td class="quantity">6</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">9</td>
+                        <td>Que hàn ống đồng</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Kg</td>
+                        <td class="quantity">2</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">10</td>
+                        <td>Gas R32</td>
+                        <td>Toàn phát/HB Flex</td>
+                        <td>Lắp đặt điều hòa</td>
+                        <td class="unit">Bình</td>
+                        <td class="quantity">1</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                    <tr>
+                        <td class="stt">11</td>
+                        <td>Vận chuyển</td>
+                        <td></td>
+                        <td></td>
+                        <td class="unit">Chuyến</td>
+                        <td class="quantity">1</td>
+                        <td class="date">30/08/2025</td>
+                        <td>Nhà máy Matsuo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="signature-area">
+                <div class="signature-box">
+                    <div>NGƯỜI LẬP</div>
+                    <div class="signature-line">(Ký, ghi rõ họ tên)</div>
+                </div>
+                <div class="signature-box">
+                    <div>NGƯỜI KIỂM TRA</div>
+                    <div class="signature-line">(Ký, ghi rõ họ tên)</div>
+                </div>
+                <div class="signature-box">
+                    <div>NGƯỜI PHÊ DUYỆT</div>
+                    <div class="signature-line">(Ký, ghi rõ họ tên)</div>
+                </div>
             </div>
         </div>
 
-        <div class="note">
-            <strong>Mô tả mặt hàng càng chi tiết càng tốt.</strong> Nếu có một mặt hàng sử dụng cho nhiều mục đích thì đề nghị ghi vào mục đích sử dụng. Khi mua hàng cần tấy hóa đơn và các chứng từ theo quy định.
-        </div>
-
-        <table id="items-table">
-            <thead>
-                <tr>
-                    <th class="stt">Stt</th>
-                    <th>Mặt hàng</th>
-                    <th>Mô tả</th>
-                    <th>Mục đích sử dụng</th>
-                    <th>Bộ phận mua hàng</th>
-                    <th class="unit">Đơn vị</th>
-                    <th class="quantity">Số lượng</th>
-                    <th class="date">Ngày nhập hàng</th>
-                    <th>Vị trí nhập hàng</th>
-                    <th>Thay đổi so với TK (Nếu có)</th>
-                </tr>
-            </thead>
-            <tbody id="items-body">
-                <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
-            </tbody>
-        </table>
-
-        <div class="signature-area">
-            <div class="signature-box">
-                <div>NGƯỜI LẬP</div>
-                <div class="signature-line"></div>
-            </div>
-            <div class="signature-box">
-                <div>NGƯỜI KIỂM TRA</div>
-                <div class="signature-line"></div>
-            </div>
-            <div class="signature-box">
-                <div>NGƯỜI PHÊ DUYỆT</div>
-                <div class="signature-line"></div>
+        <div class="footer">
+            <div>Phiếu yêu cầu mua hàng - Công ty Cổ phần Đầu tư và Xây dựng Âu Việt</div>
+            <div class="logo">
+                <i class="fas fa-building logo-icon"></i>
+                <div>Chất lượng tạo nên giá trị bền vững</div>
             </div>
         </div>
     </div>
 
-    <div class="loading" id="loading">Đang tải dữ liệu...</div>
-    <div class="error" id="error" style="display: none;"></div>
-
     <script>
+        // Giả lập dữ liệu từ API (trong thực tế sẽ fetch từ API thật)
         document.addEventListener('DOMContentLoaded', function() {
-            const apiUrl = 'https://script.google.com/macros/s/AKfycbz45axkSa-92kz-vCqAQ1xwmRjlFWqX6b0v-B0ENI73UIa8M9RzCXDkSQtNcwhFX2FA/exec';
-            const loadingElement = document.getElementById('loading');
-            const errorElement = document.getElementById('error');
-            
-            // Lấy ID phiếu từ URL (nếu có)
-            const urlParams = new URLSearchParams(window.location.search);
-            const requestId = urlParams.get('id');
-            
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Không thể kết nối đến server');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    loadingElement.style.display = 'none';
-                    
-                    if (data && data['Phiếu YCMH'] && data['Phiếu YCMH'].data.length > 0) {
-                        // Lấy thông tin phiếu yêu cầu (nếu có ID cụ thể từ URL thì lấy phiếu đó)
-                        let requestData;
-                        if (requestId) {
-                            requestData = data['Phiếu YCMH'].data.find(item => item.ID === requestId);
-                        }
-                        
-                        // Nếu không tìm thấy phiếu cụ thể hoặc không có ID, lấy phiếu đầu tiên
-                        if (!requestData) {
-                            requestData = data['Phiếu YCMH'].data[0];
-                        }
-                        
-                        // Hiển thị thông tin chung
-                        document.getElementById('project-name').textContent = requestData['Tên công trình'] || '';
-                        document.getElementById('request-code').textContent = requestData.ID || '';
-                        
-                        // Xử lý ngày tháng
-                        const requestDate = requestData['Ngày yêu cầu'] ? 
-                            new Date(requestData['Ngày yêu cầu']).toLocaleDateString('vi-VN') : 
-                            new Date().toLocaleDateString('vi-VN');
-                        document.getElementById('request-date').textContent = requestDate;
-                        
-                        document.getElementById('request-version').textContent = '01';
-                        
-                        // Lọc và hiển thị chi tiết phiếu yêu cầu
-                        if (data['YCMH chi tiết'] && data['YCMH chi tiết'].data.length > 0) {
-                            const details = data['YCMH chi tiết'].data.filter(
-                                item => item['Mã phiếu YCMH'] === requestData.ID
-                            );
-                            
-                            const itemsBody = document.getElementById('items-body');
-                            itemsBody.innerHTML = '';
-                            
-                            details.forEach(item => {
-                                const row = document.createElement('tr');
-                                row.innerHTML = `
-                                    <td class="stt">${item.STT || ''}</td>
-                                    <td>${item['Mặt hàng'] || ''}</td>
-                                    <td>${item['Mô tả'] || ''}</td>
-                                    <td>${item['Mục đích sử dụng'] || ''}</td>
-                                    <td>${item['Bộ phận mua hàng'] || ''}</td>
-                                    <td class="unit">${item['Đơn vị tính'] || ''}</td>
-                                    <td class="quantity">${item['Số lượng'] || ''}</td>
-                                    <td class="date">${item['Ngày nhập hàng'] ? 
-                                        new Date(item['Ngày nhập hàng']).toLocaleDateString('vi-VN') : ''}</td>
-                                    <td>${item['Vị trí nhập hàng'] || ''}</td>
-                                    <td>${item['Thay đổi so với TK'] || ''}</td>
-                                `;
-                                itemsBody.appendChild(row);
-                            });
-                        } else {
-                            showError('Không có dữ liệu chi tiết cho phiếu yêu cầu này');
-                        }
-                    } else {
-                        showError('Không tìm thấy dữ liệu phiếu yêu cầu mua hàng');
-                    }
-                })
-                .catch(error => {
-                    loadingElement.style.display = 'none';
-                    showError('Lỗi khi tải dữ liệu: ' + error.message);
-                });
-                
-            function showError(message) {
-                errorElement.textContent = message;
-                errorElement.style.display = 'block';
-            }
+            // Giả lập dữ liệu từ API
+            const mockData = {
+                "Hợp đồng": {
+                    "headers": ["ID", "Ngày ký hợp đồng", "Tên công ty", "Tên trong HD", "Tên công trình", "Ghi chú"],
+                    "data": [{
+                        "ID": "CTA",
+                        "Ngày ký hợp đồng": "2025-08-26T17:00:00.000Z",
+                        "Tên công ty": "Công ty A",
+                        "Tên trong HD": "CATA",
+                        "Tên công trình": "Xây dựng Xưởng may",
+                        "Ghi chú": ""
+                    }]
+                },
+                "Phiếu YCMH": {
+                    "headers": ["ID", "Hợp đồng", "Tên công trình", "Tên công ty", "Tên trong hợp đồng", "Ngày yêu cầu"],
+                    "data": [{
+                        "ID": "0aa67e54",
+                        "Hợp đồng": "CTA",
+                        "Tên công trình": "Xây dựng Xưởng may",
+                        "Tên công ty": "Công ty A",
+                        "Tên trong hợp đồng": "",
+                        "Ngày yêu cầu": "2025-08-26T17:00:00.000Z"
+                    }]
+                },
+                "YCMH chi tiết": {
+                    "headers": ["ID", "Mã phiếu YCMH", "STT", "Mặt hàng", "Mô tả", "Mục đích sử dụng", "Bộ phận mua hàng", "Đơn vị tính", "Số lượng", "Vị trí nhập hàng", "Thay đổi so với TK", "Nội dung thay đổi", "Chốt nhà cung cấp", "Đơn giá", "Thuế suất", "Thành tiền", "Ngày nhập hàng", "Ngày hàng về", "Hình thức thanh toán"],
+                    "data": [{
+                        "ID": "e5ea3ab2",
+                        "Mã phiếu YCMH": "0aa67e54",
+                        "STT": 1,
+                        "Mặt hàng": "Lắp ổ cắm",
+                        "Mô tả": "dlfdsmlm",
+                        "Mục đích sử dụng": "Sửa chữa",
+                        "Bộ phận mua hàng": "VP",
+                        "Đơn vị tính": "Cái",
+                        "Số lượng": 10,
+                        "Vị trí nhập hàng": "Công ty A",
+                        "Thay đổi so với TK": "Không",
+                        "Nội dung thay đổi": "",
+                        "Chốt nhà cung cấp": "",
+                        "Đơn giá": "",
+                        "Thuế suất": "",
+                        "Thành tiền": "",
+                        "Ngày nhập hàng": "",
+                        "Ngày hàng về": "",
+                        "Hình thức thanh toán": ""
+                    }]
+                }
+            };
+
+            // Ở đây có thể thực hiện các thao tác với dữ liệu từ API
+            console.log('Dữ liệu từ API:', mockData);
         });
     </script>
 </body>
