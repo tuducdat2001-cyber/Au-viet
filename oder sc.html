@@ -21,6 +21,7 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
     .container{max-width:1200px;margin:0 auto;padding:0 20px;width:100%}
+
     header{background:#fff;color:var(--text);padding:16px 0;box-shadow:var(--shadow-md);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border)}
     .header-content{display:flex;align-items:center;justify-content:space-between}
     a.logo-container{display:flex;align-items:center;gap:12px;text-decoration:none}
@@ -32,6 +33,7 @@
     .nav-links a:hover{color:var(--primary);background:var(--primary-light)}
     .header-cta{padding:10px 20px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;transition:var(--transition);box-shadow:var(--shadow-sm)}
     .header-cta:hover{background:var(--primary-dark);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+
     .main{flex:1;padding:50px 0 40px}
     .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:40px;margin-bottom:32px;position:relative;overflow:hidden;transition:var(--transition)}
     .card:hover{transform:translateY(-5px);box-shadow:0 15px 30px rgba(0,0,0,.15)}
@@ -39,33 +41,40 @@
     .card-header::after{content:'';position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);width:80px;height:4px;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:2px}
     h1{font-size:32px;font-weight:700;color:var(--text);margin:0 0 12px}
     .lead{color:var(--text-light);font-size:18px;margin-top:0;font-weight:400}
+
     .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
     .form-group{margin-bottom:24px;position:relative}
     label{display:block;font-weight:600;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:6px}
     .req::after{content:"*";color:#ef4444}
-    input,select,textarea{width:100%;padding:16px 18px;border:2px solid var(--border);border-radius:10px;font-size:16px;background:#fff;transition:var(--transition)}
+    input,select,textarea{width:100%;padding:14px 16px;border:2px solid var(--border);border-radius:10px;font-size:16px;background:#fff;transition:var(--transition)}
     input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(37,99,235,.1)}
-    textarea{min-height:160px;resize:vertical}
+    textarea{min-height:120px;resize:vertical}
     .note{font-size:15px;color:var(--text-light);margin-top:24px;text-align:center;padding:12px;background:var(--bg);border-radius:8px}
+
     .btn{background:linear-gradient(120deg,var(--primary),var(--primary-dark));color:#fff;padding:16px 32px;border:none;border-radius:10px;font-weight:600;font-size:17px;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--shadow-md)}
     .btn:hover{background:linear-gradient(120deg,var(--primary-dark),var(--primary));transform:translateY(-2px);box-shadow:0 6px 15px rgba(37,99,235,.3)}
     .btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+
+    /* Repeater */
     .feature-list{display:grid;gap:12px}
     .feature-row{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
     .feature-row .remove-btn{padding:12px 16px;border:2px solid var(--border);border-radius:8px;background:#fff;cursor:pointer}
     .add-feature-btn{margin-top:8px}
-    .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
-    .popup-overlay.show{opacity:1;visibility:visible;transition:opacity .3s ease}
-    .popup-box{background:#fff;padding:40px;border-radius:16px;box-shadow:var(--shadow-lg);text-align:center;max-width:450px;width:90%;transform:scale(.9);transition:transform .3s ease}
+
+    /* Popup */
+    .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s .25s}
+    .popup-overlay.show{opacity:1;visibility:visible}
+    .popup-box{background:#fff;padding:36px;border-radius:16px;box-shadow:var(--shadow-lg);text-align:center;max-width:460px;width:90%;transform:scale(.96);transition:transform .25s ease}
     .popup-overlay.show .popup-box{transform:scale(1)}
-    .popup-icon{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px}
+    .popup-icon{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:36px}
     .popup-icon.success{background:var(--success-bg);color:var(--success)}
     .popup-icon.error{background:var(--error-bg);color:var(--error)}
-    .popup-title{font-size:24px;font-weight:700;margin-bottom:12px;color:var(--text)}
-    .popup-message{color:var(--text-light);margin-bottom:30px}
-    .popup-close-btn{padding:12px 30px;font-size:16px;font-weight:600;border-radius:8px;border:none;cursor:pointer;transition:var(--transition)}
+    .popup-title{font-size:24px;font-weight:800;margin-bottom:10px;color:var(--text)}
+    .popup-message{color:var(--text-light);margin-bottom:22px}
+    .popup-close-btn{padding:12px 28px;font-size:16px;font-weight:700;border-radius:10px;border:none;cursor:pointer}
     .popup-close-btn.success{background:var(--success);color:#fff}
     .popup-close-btn.error{background:var(--error);color:#fff}
+
     footer{background:var(--footer-bg);color:var(--footer-text);padding:60px 0 24px;margin-top:auto}
     .footer-content{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
     .footer-about .footer-logo{height:40px;margin-bottom:16px}
@@ -78,9 +87,17 @@
     .social-links a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#374151;color:#fff;transition:var(--transition)}
     .social-links a:hover{background:var(--primary);transform:translateY(-3px)}
     .footer-bottom{border-top:1px solid #374151;padding-top:24px;text-align:center;font-size:14px}
+
     @media (max-width:968px){.nav-links{display:none}.form-grid{grid-template-columns:1fr;gap:0}.footer-content{grid-template-columns:1fr 1fr}}
     @media (max-width:640px){.header-content{flex-direction:column;gap:16px}h1{font-size:28px}.footer-content{grid-template-columns:1fr;text-align:center}.footer-heading::after{left:50%;transform:translateX(-50%)}.social-links{justify-content:center}}
-    .feature-text,.note-text{min-height:50px!important;font-size:15px;padding:8px 12px;resize:vertical}
+
+    /* ▼▼ CHỈNH 2 HÀNG CHO TEXTAREA TÍNH NĂNG / GHI CHÚ ▼▼ */
+    .feature-text, .note-text {
+      min-height: 48px !important;   /* ~2 hàng */
+      font-size: 15px;
+      padding: 6px 10px;
+      resize: vertical;
+    }
   </style>
 </head>
 <body>
@@ -155,23 +172,11 @@
             <textarea name="general_notes" placeholder="Ví dụ: tích hợp với hệ thống hiện có, ưu tiên mobile, yêu cầu bảo mật..."></textarea>
           </div>
 
+          <!-- Danh sách tính năng -->
           <div class="form-group">
             <label><i class="fas fa-list-check"></i> <span class="req">Danh sách tính năng</span></label>
-            <div id="featureList" class="feature-list">
-              <div class="feature-row" data-row>
-                <div>
-                  <label style="font-weight:600;margin-bottom:6px;display:block;">Tính năng</label>
-                  <textarea data-feature class="feature-text" rows="2" placeholder="VD: Quản lý đơn hàng" required></textarea>
-                </div>
-                <div>
-                  <label style="font-weight:600;margin-bottom:6px;display:block;">Ghi chú</label>
-                  <textarea data-note class="note-text" rows="2" placeholder="VD: Cho phép import Excel"></textarea>
-                </div>
-                <button type="button" class="remove-btn" onclick="removeFeatureRow(this)">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
-            </div>
+            <div id="featureList" class="feature-list"></div>
+
             <button type="button" class="btn add-feature-btn" onclick="addFeatureRow()">
               <i class="fas fa-plus"></i> Thêm tính năng
             </button>
@@ -223,11 +228,13 @@
 </div>
 
 <script>
-  // Đổi URL dưới đây sang Web App /exec của bạn
-  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwGc2MOA30VlCq_w_3627HSpPO3INlOKRYvMzbWy54Ss3xJW98Ku2NPGbj3EJvd8EKc/exec';
+  /* ====== ĐỔI URL WEBHOOK n8n Ở ĐÂY ====== */
+  const N8N_WEBHOOK_URL = 'https://asia-hn.n8nhosting.cloud/webhook/39bacc3c-b33a-4c32-8898-ae85a312c4cc';
 
   const form = document.getElementById('orderForm');
   const btn = document.getElementById('submitBtn');
+
+  // Popup helpers
   const popupOverlay = document.getElementById('popup-overlay');
   const popupIcon = document.getElementById('popup-icon');
   const popupTitle = document.getElementById('popup-title');
@@ -237,24 +244,17 @@
   function showPopup(type, title, message) {
     popupTitle.textContent = title;
     popupMessage.innerHTML = message;
-    if (type === 'success') {
-      popupIcon.className = 'popup-icon success';
-      popupIcon.innerHTML = '<i class="fas fa-check"></i>';
-      popupCloseBtn.className = 'popup-close-btn success';
-      popupCloseBtn.textContent = 'OK';
-    } else {
-      popupIcon.className = 'popup-icon error';
-      popupIcon.innerHTML = '<i class="fas fa-times"></i>';
-      popupCloseBtn.className = 'popup-close-btn error';
-      popupCloseBtn.textContent = 'Thử lại';
-    }
+    popupIcon.className = 'popup-icon ' + (type === 'success' ? 'success' : 'error');
+    popupIcon.innerHTML = type === 'success' ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>';
+    popupCloseBtn.className = 'popup-close-btn ' + (type === 'success' ? 'success' : 'error');
+    popupCloseBtn.textContent = type === 'success' ? 'OK' : 'Thử lại';
     popupOverlay.classList.add('show');
   }
   function hidePopup(){ popupOverlay.classList.remove('show'); }
   popupCloseBtn.addEventListener('click', hidePopup);
-  popupOverlay.addEventListener('click', (e) => { if (e.target === popupOverlay) hidePopup(); });
+  popupOverlay.addEventListener('click', (e)=>{ if(e.target===popupOverlay) hidePopup(); });
 
-  // Repeater
+  // Repeater (1 dòng mặc định)
   function addFeatureRow(featureVal="", noteVal=""){
     const list = document.getElementById('featureList');
     const row = document.createElement('div');
@@ -274,7 +274,7 @@
       </button>`;
     list.appendChild(row);
     if (featureVal) row.querySelector('[data-feature]').value = featureVal;
-    if (noteVal)    row.querySelector('[data-note]').value = noteVal;
+    if (noteVal) row.querySelector('[data-note]').value = noteVal;
   }
   function removeFeatureRow(btn){
     const list = document.getElementById('featureList');
@@ -287,70 +287,71 @@
     }
     btn.closest('[data-row]').remove();
   }
-  function buildFeaturesPayload(){
-    const rows = Array.from(document.querySelectorAll('#featureList [data-row]'));
-    const features = [], notes = [];
-    for (const r of rows){
-      const f = (r.querySelector('[data-feature]').value || '').trim();
-      const n = (r.querySelector('[data-note]').value || '').trim();
-      if (f){ features.push(f); notes.push(n); }
-    }
-    return { features: features.join('\n'), feature_notes: notes.join('\n') };
+
+  // Gom thành 1 biến lớn: features = [ {feature, note}, ... ]
+function buildFeaturesArray(){
+  const rows = Array.from(document.querySelectorAll('#featureList [data-row]'));
+  const arr = [];
+  rows.forEach((r, i) => {
+    const f = (r.querySelector('[data-feature]').value||'').trim();
+    const n = (r.querySelector('[data-note]').value||'').trim();
+    if(f) arr.push({ index: i+1, feature: f, note: n });
+  });
+  return arr;
+}
+
+
+  // Fire-and-forget: ưu tiên sendBeacon → fallback no-cors (không cần CORS server)
+  function sendFireAndForgetJSON(url, payload){
+    try{
+      if(navigator.sendBeacon){
+        const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
+        if(navigator.sendBeacon(url, blob)) return true;
+      }
+    }catch(_){}
+    try{
+      fetch(url, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+      return true;
+    }catch(_){}
+    return false;
   }
 
-  // Simple request: URL-encoded, KHÔNG đặt headers -> không có preflight
-  async function postForm(url, payload, timeoutMs = 15000) {
-    const controller = new AbortController();
-    const t = setTimeout(() => controller.abort(), timeoutMs);
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        body: new URLSearchParams(payload),
-        signal: controller.signal
-      });
-      const text = await res.text();
-      let data; try { data = JSON.parse(text); } catch { data = { ok:false, error:text }; }
-      return { status: res.status, ok: res.ok, data };
-    } finally { clearTimeout(t); }
+  // Mã đơn tạm hiển thị ngay
+  function genClientOrderId(){
+    const now=Date.now(); const d=new Date(now).toISOString().slice(0,10).replace(/-/g,'');
+    return `ORD-${d}-${(now%9000+1000)}`;
   }
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e)=>{
     e.preventDefault();
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
 
     const raw = Object.fromEntries(new FormData(form).entries());
-    const {features, feature_notes} = buildFeaturesPayload();
-    raw.features = features;
-    raw.feature_notes = feature_notes;
-    raw.user_agent = navigator.userAgent || '';
-
-    if (!raw.features || !raw.features.trim()){
+    const features = buildFeaturesArray();
+    if (features.length === 0){
       showPopup('error','Thiếu dữ liệu','Vui lòng nhập ít nhất 1 tính năng.');
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi yêu cầu';
       return;
     }
 
-    try {
-      const { status, data } = await postForm(WEB_APP_URL, raw, 15000);
-      if (data && data.ok){
-        showPopup('success','Gửi thành công!',`Cảm ơn bạn. Mã yêu cầu: <strong>${data.order_id}</strong>.`);
-        form.reset();
-        document.getElementById('featureList').innerHTML = '';
-        addFeatureRow();
-      } else {
-        const msg = (data && data.error) ? data.error : `HTTP ${status}`;
-        showPopup('error','Đã có lỗi xảy ra', msg);
-      }
-    } catch (err){
-      showPopup('error','Lỗi kết nối','Không thể kết nối đến máy chủ. Vui lòng thử lại.');
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi yêu cầu';
+    const payload = {
+      ...raw,
+      features,
+      user_agent: navigator.userAgent||'',
+      order_id: genClientOrderId()
+    };
+
+    const sent = sendFireAndForgetJSON(N8N_WEBHOOK_URL, payload);
+
+    if (sent){
+      showPopup('success','Đã nhận yêu cầu',`Mã tạm: <strong>${payload.order_id}</strong>. Chúng tôi sẽ liên hệ sớm.`);
+      form.reset();
+      document.getElementById('featureList').innerHTML = '';
+      addFeatureRow(); // luôn để sẵn 1 dòng
+    } else {
+      showPopup('error','Không thể gửi','Vui lòng kiểm tra kết nối mạng và thử lại.');
     }
   });
 
+  // Khởi tạo: 1 dòng tính năng mặc định
   addFeatureRow();
 </script>
 </body>
