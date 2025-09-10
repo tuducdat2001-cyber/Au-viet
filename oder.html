@@ -24,6 +24,7 @@
     .alert.ok { background:#ecfdf5; color:#065f46; display:block }
     .alert.err { background:#fef2f2; color:#991b1b; display:block }
     .req::after { content:" *"; color:#ef4444; }
+    @media (max-width: 680px) { .row { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -91,7 +92,8 @@
   </div>
 
   <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwGc2MOA30VlCq_w_3627HSpPO3INlOKRYvMzbWy54Ss3xJW98Ku2NPGbj3EJvd8EKc/exec'; // <<— dán URL Web App
+    // Dán URL Web App của bạn vào đây:
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwGc2MOA30VlCq_w_3627HSpPO3INlOKRYvMzbWy54Ss3xJW98Ku2NPGbj3EJvd8EKc/exec';
 
     const form = document.getElementById('orderForm');
     const alertBox = document.getElementById('alert');
@@ -101,13 +103,18 @@
       e.preventDefault();
       btn.disabled = true; alertBox.className='alert'; alertBox.style.display='none';
 
-      const formData = Object.fromEntries(new FormData(form).entries());
+      const raw = Object.fromEntries(new FormData(form).entries());
+      // Thêm UA và (tuỳ chọn) IP do bạn tự lấy ở FE nếu có
+      raw.user_agent = navigator.userAgent || '';
+      // raw.client_ip = '...'; // nếu bạn tự lấy IP ở FE
+
+      const body = new URLSearchParams(raw).toString();
 
       try {
         const res = await fetch(WEB_APP_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
         });
         const data = await res.json();
         if (data.ok) {
