@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đặt hàng phần mềm theo yêu cầu</title>
+  <style>
+    :root { --primary:#2d7c2d; --bg:#f7f9fb; --card:#fff; --muted:#6b7280; }
+    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto; background:var(--bg); }
+    .wrap { max-width:880px; margin:32px auto; padding:16px; }
+    .card { background:var(--card); border-radius:16px; box-shadow: 0 10px 30px rgba(0,0,0,.06); padding:24px; }
+    h1 { margin:0 0 8px; color:#111827; }
+    p.lead { color:var(--muted); margin-top:0 }
+    label { display:block; font-weight:600; margin:16px 0 6px; }
+    input, select, textarea {
+      width:100%; padding:12px 14px; border:1px solid #e5e7eb; border-radius:10px; font-size:15px; background:#fff;
+    }
+    textarea { min-height:140px; resize:vertical }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .btn { background:var(--primary); color:#fff; padding:12px 18px; border:none; border-radius:12px; font-weight:700; cursor:pointer; }
+    .btn:disabled { opacity:.6; cursor:not-allowed }
+    .note { font-size:13px; color:var(--muted) }
+    .alert { padding:12px 14px; border-radius:10px; margin-top:12px; display:none }
+    .alert.ok { background:#ecfdf5; color:#065f46; display:block }
+    .alert.err { background:#fef2f2; color:#991b1b; display:block }
+    .req::after { content:" *"; color:#ef4444; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Đặt hàng phần mềm theo yêu cầu</h1>
+      <p class="lead">Mô tả nhu cầu của bạn, chúng tôi sẽ liên hệ tư vấn và báo giá.</p>
+
+      <form id="orderForm">
+        <div class="row">
+          <div>
+            <label class="req">Tên công ty / cá nhân</label>
+            <input name="company" required placeholder="VD: Công ty ABC / Nguyễn Văn A" />
+          </div>
+          <div>
+            <label>Gói sản phẩm</label>
+            <select name="product_plan">
+              <option value="Tư vấn & bản thô">Tư vấn & bản thô</option>
+              <option value="MVP 2–4 tuần">MVP 2–4 tuần</option>
+              <option value="Triển khai đầy đủ">Triển khai đầy đủ</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label class="req">Người liên hệ</label>
+            <input name="contact_name" required placeholder="Họ tên" />
+          </div>
+          <div>
+            <label class="req">Số điện thoại</label>
+            <input name="phone" required placeholder="09xx..." />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label class="req">Email</label>
+            <input name="email" type="email" required placeholder="you@example.com" />
+          </div>
+          <div>
+            <label>Ngân sách dự kiến (VNĐ)</label>
+            <input name="budget" placeholder="VD: 50.000.000" />
+          </div>
+        </div>
+
+        <label>Hạn mong muốn</label>
+        <input name="deadline" type="date" />
+
+        <label class="req">Mô tả tính năng cần thiết (càng chi tiết càng tốt)</label>
+        <textarea name="features" required placeholder="- Quản lý đơn hàng
+- Tích hợp Zalo OA
+- Báo cáo theo ngày/tuần
+- Phân quyền tài khoản..."></textarea>
+
+        <label>Ghi chú khác</label>
+        <textarea name="notes" placeholder="Luồng phê duyệt, chuẩn dữ liệu sẵn có, hệ thống đang dùng, v.v."></textarea>
+
+        <div class="note">Bằng cách gửi, bạn đồng ý cho phép chúng tôi lưu thông tin để tư vấn và báo giá.</div>
+        <div id="alert" class="alert"></div>
+        <br/>
+        <button class="btn" id="submitBtn" type="submit">Gửi yêu cầu</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwGc2MOA30VlCq_w_3627HSpPO3INlOKRYvMzbWy54Ss3xJW98Ku2NPGbj3EJvd8EKc/exec'; // <<— dán URL Web App
+
+    const form = document.getElementById('orderForm');
+    const alertBox = document.getElementById('alert');
+    const btn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true; alertBox.className='alert'; alertBox.style.display='none';
+
+      const formData = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        const res = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        const data = await res.json();
+        if (data.ok) {
+          alertBox.textContent = `✅ Gửi thành công! Mã yêu cầu: ${data.order_id}`;
+          alertBox.className = 'alert ok';
+          alertBox.style.display = 'block';
+          form.reset();
+        } else {
+          alertBox.textContent = '❌ Lỗi: ' + (data.error || 'Không rõ nguyên nhân');
+          alertBox.className = 'alert err';
+          alertBox.style.display = 'block';
+        }
+      } catch (err) {
+        alertBox.textContent = '❌ Lỗi kết nối: ' + err;
+        alertBox.className = 'alert err';
+        alertBox.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
